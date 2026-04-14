@@ -38,12 +38,13 @@ public:
         char userInput;
         while (true) {
             cout << input << endl;
-            cin >> &userInput;
+            cin >> userInput;
 
-            if (userInput == 'y' || userInput == 'Y') {
-                continue;
+            userInput = tolower(userInput);
+            if (userInput == 'y') {
+                break;
             }
-            else if (userInput == 'n' || userInput == 'N') {
+            else if (userInput == 'n') {
                 break;
             }
             else {
@@ -51,6 +52,22 @@ public:
             }
         }
         return userInput;
+    }
+
+    static char ticketType(string input) {
+        char userInput;
+
+        while (true) {
+            cout << input << endl;
+            cin >> userInput;
+            userInput = tolower(userInput);
+
+            if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
+                return userInput;
+            }
+
+            cout << "Please only enter 'f', 'b' or 'e' " << endl;
+        }
     }
 };
 
@@ -60,6 +77,7 @@ int main() {
     question.generalInfo();
     question.generalRowInfo();
     question.passengerClassInfo();
-    FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
+    char userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
+    char userSeatChoice = FirstQuestion::ticketType("Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
     return 0;
 }
