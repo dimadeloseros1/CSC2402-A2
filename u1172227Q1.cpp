@@ -24,7 +24,7 @@ void generalRowInfo() {
         for (int j = 0; j < 6; j++) {
         }
         if (i <= 9) {
-            cout << "Row  " << i << " * * *  * * *" << endl;
+            cout << "Row " << setw(2) << i << " * * *  * * *" << endl;
         } else {
             cout << "Row " << i << " * * *  * * *" << endl;
         }
