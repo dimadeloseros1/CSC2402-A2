@@ -2,6 +2,7 @@
 #include <iostream>
 
 using namespace std;
+
 class FirstQuestion {
 public:
     void generalInfo() {
@@ -32,6 +33,25 @@ public:
         cout << "Row 3 and 7 are for business class passengers." << endl;
         cout << "Row 8 and 13 are for economy class passengers." << endl;
     }
+
+    static char userReserveSeat(string input) {
+        char userInput;
+        while (true) {
+            cout << input << endl;
+            cin >> &userInput;
+
+            if (userInput == 'y' || userInput == 'Y') {
+                continue;
+            }
+            else if (userInput == 'n' || userInput == 'N') {
+                break;
+            }
+            else {
+                cout << "Please only enter 'y' or 'n'" << endl;
+            }
+        }
+        return userInput;
+    }
 };
 
 
@@ -40,5 +60,6 @@ int main() {
     question.generalInfo();
     question.generalRowInfo();
     question.passengerClassInfo();
+    FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
     return 0;
 }
