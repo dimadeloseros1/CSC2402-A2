@@ -10,7 +10,7 @@ public:
         cout << "The current seat assignments are as follows." << endl << endl;
     }
 
-    void generalRowInfo() {
+    void generalGidInfo() {
         cout << setw(19) << "A B C  D E F" << endl;
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 6; j++) {
@@ -34,39 +34,43 @@ public:
         cout << "Row 8 and 13 are for economy class passengers." << endl;
     }
 
-    static char userReserveSeat(string input) {
+    static char userReserveSeat(const string &input) {
         char userInput;
         while (true) {
-            cout << input << endl;
-            cin >> userInput;
+            try {
+                cout << input << endl;
+                cin >> userInput;
 
-            userInput = tolower(userInput);
-            if (userInput == 'y') {
-                break;
-            }
-            else if (userInput == 'n') {
-                break;
-            }
-            else {
-                cout << "Please only enter 'y' or 'n'" << endl;
+                userInput = tolower(userInput);
+                if (userInput == 'y') {
+                    break;
+                } else if (userInput == 'n') {
+                    break;
+                }
+                throw runtime_error("Please only enter 'y' or 'n'");
+            } catch (const exception &e) {
+                cout << e.what() << endl;
             }
         }
         return userInput;
     }
 
-    static char ticketType(string input) {
+    static char ticketType(const string &input) {
         char userInput;
 
         while (true) {
-            cout << input << endl;
-            cin >> userInput;
-            userInput = tolower(userInput);
+            try {
+                cout << input << endl;
+                cin >> userInput;
+                userInput = tolower(userInput);
 
-            if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
-                return userInput;
+                if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
+                    return userInput;
+                }
+                throw runtime_error("Please input either f, b, or e");
+            } catch (const exception &e) {
+                cout << e.what() << endl;
             }
-
-            cout << "Please only enter 'f', 'b' or 'e' " << endl;
         }
     }
 };
@@ -75,9 +79,10 @@ public:
 int main() {
     FirstQuestion question;
     question.generalInfo();
-    question.generalRowInfo();
+    question.generalGidInfo();
     question.passengerClassInfo();
     char userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
-    char userSeatChoice = FirstQuestion::ticketType("Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
+    char userSeatChoice = FirstQuestion::ticketType(
+        "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
     return 0;
 }
