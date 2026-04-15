@@ -1,16 +1,17 @@
 #include <iomanip>
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
 class FirstQuestion {
 public:
-    void generalInfo() {
+    static void generalInfo() {
         cout << "This program assigns seats for a commercial airplane." << endl;
         cout << "The current seat assignments are as follows." << endl << endl;
     }
 
-    void generalGidInfo() {
+    static void generalGidInfo() {
         cout << setw(19) << "A B C  D E F" << endl;
         for (int i = 1; i <= 13; i++) {
             for (int j = 0; j < 6; j++) {
@@ -25,7 +26,7 @@ public:
         cout << endl;
     }
 
-    void passengerClassInfo() {
+    static void passengerClassInfo() {
         cout << "* -- available seat" << endl;
         cout << "X -- available seat" << endl << endl;
 
@@ -73,16 +74,43 @@ public:
             }
         }
     }
+
+    static int rowNumber(const string &input) {
+        int userInput;
+
+        while (true) {
+            try {
+                cout << input << endl;
+                cin >> userInput;
+
+                // Checkin for numerical values
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw runtime_error("Please only enter numerical values");
+                }
+
+                // Checkin only for values within the row
+                if (userInput >= 1 and userInput <= 13) {
+                    return userInput;
+                }
+                throw runtime_error("Please only enter a number between 1 and 13");
+            } catch (const exception &e) {
+                cout << e.what() << endl;
+            }
+        }
+    }
 };
 
 
 int main() {
     FirstQuestion question;
-    question.generalInfo();
-    question.generalGidInfo();
-    question.passengerClassInfo();
+    FirstQuestion::generalInfo();
+    FirstQuestion::generalGidInfo();
+    FirstQuestion::passengerClassInfo();
     char userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
-    char userSeatChoice = FirstQuestion::ticketType(
-        "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
+    char userSeatChoice = FirstQuestion::ticketType("Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
+    int userNum = FirstQuestion::rowNumber("Please pick your row number: ");
+
     return 0;
 }
