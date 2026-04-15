@@ -65,6 +65,7 @@ public:
                 cin >> userInput;
                 userInput = tolower(userInput);
 
+                // This line checks if the user only inputs letters 'f', 'b', or 'e'
                 if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
                     return userInput;
                 }
@@ -100,6 +101,29 @@ public:
             }
         }
     }
+
+    enum rowSeatNumber {
+        A = 1,
+        B,
+        C,
+        D
+    };
+
+    static rowSeatNumber seatLetter(rowSeatNumber letterNum) {
+        int input;
+        while (true) {
+            try {
+                cout << "Please choose either A, B, C, or D" << endl;
+                cin >> input;
+                letterNum = static_cast<rowSeatNumber>(input);
+                return letterNum;
+
+                throw runtime_error("Please only input either A, B, C or D");
+            } catch (const exception &e) {
+                cout << e.what() << endl;
+            }
+        }
+    }
 };
 
 
@@ -109,8 +133,10 @@ int main() {
     FirstQuestion::generalGidInfo();
     FirstQuestion::passengerClassInfo();
     char userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
-    char userSeatChoice = FirstQuestion::ticketType("Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
+    char userSeatChoice = FirstQuestion::ticketType(
+        "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
     int userNum = FirstQuestion::rowNumber("Please pick your row number: ");
-
+    auto seatNumber = FirstQuestion::seatLetter(FirstQuestion::A);
+    cout << seatNumber;
     return 0;
 }
