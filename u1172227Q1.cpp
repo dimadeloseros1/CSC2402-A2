@@ -102,25 +102,19 @@ public:
         }
     }
 
-    enum rowSeatNumber {
-        A = 1,
-        B,
-        C,
-        D
-    };
-
-    static rowSeatNumber seatLetter(rowSeatNumber letterNum) {
-        int input;
+    static int seatLetter(const string &prompt) {
+        char input;
         while (true) {
-            try {
-                cout << "Please choose either A, B, C, or D" << endl;
-                cin >> input;
-                letterNum = static_cast<rowSeatNumber>(input);
-                return letterNum;
+            cout << prompt << endl;
+            cin >> input;
+            input = tolower(input);
 
-                throw runtime_error("Please only input either A, B, C or D");
-            } catch (const exception &e) {
-                cout << e.what() << endl;
+            if (input >= 'a' && input <= 'f') {
+                // This line is crucial for the correct transforming char to int
+                // Here we are using ASCII numbers to convert them to the proper integers starting from index 0
+                return input - 'a';
+            } else {
+                cout << "Please only input either A, B, C, D, E, or F" << endl;
             }
         }
     }
@@ -136,7 +130,7 @@ int main() {
     char userSeatChoice = FirstQuestion::ticketType(
         "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
     int userNum = FirstQuestion::rowNumber("Please pick your row number: ");
-    auto seatNumber = FirstQuestion::seatLetter(FirstQuestion::A);
+    auto seatNumber = FirstQuestion::seatLetter("Please choose either A, B, C, D, E, or F: ");
     cout << seatNumber;
     return 0;
 }
