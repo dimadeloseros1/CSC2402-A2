@@ -44,22 +44,18 @@ public:
     static bool userReserveSeat(const string &input) {
         char userInput;
         while (true) {
-            try {
-                cout << input << endl;
-                cin >> userInput;
+            cout << input << endl;
+            cin >> userInput;
 
-                userInput = tolower(userInput);
-                if (userInput == 'y') {
-                    return true;
-                } else if (userInput == 'n') {
-                    return false;
-                }
-                throw runtime_error("Please only enter 'y' or 'n'");
-            } catch (const exception &e) {
-                cout << e.what() << endl;
+            userInput = tolower(userInput);
+            if (userInput == 'y') {
+                return true;
+            } else if (userInput == 'n') {
+                return false;
+            } else {
+                cout << "Please only enter 'y' or 'n'" << endl;
             }
         }
-        return userInput;
     }
 
     static char ticketType(const string &input) {
@@ -113,8 +109,8 @@ public:
             }
 
             // Checkin only for values within the row
+            // we subtract (userInput - 1) so once we assign the value to the grid, the correct seat can be shown on the grid
             if (ticketType == 'f') {
-                // we subtract (userInput - 1) so once we assign the value to the grid, the correct seat can be shown on the grid
                 if (userInput >= 1 && userInput <= 2) {
                     return userInput - 1;
                 } else {
@@ -162,7 +158,7 @@ public:
 
         cout << endl;
         cout << setw(22) << " A  B  C  D  E  F" << endl;
-        arr[rowNumber][colNumber] = "X";
+        arr[rowNumber][colNumber] = true;
         for (int i = 0; i < 13; i++) {
             // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
@@ -188,8 +184,10 @@ int main() {
     FirstQuestion::generalInfo();
     FirstQuestion::generalGidInfo();
     FirstQuestion::passengerClassInfo();
-    char userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
-    while (userChoice) {
+    bool userChoice;
+    do {
+        userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
+        if (!userChoice) break;
         char userSeatChoice = FirstQuestion::ticketType(
             "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
         string userInputClass = FirstQuestion::ticketRowNumberInfo(userSeatChoice);
@@ -197,6 +195,6 @@ int main() {
         const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
         cout << seatNumber;
         question.GameManager(userNum, seatNumber);
-    }
+    } while (userChoice);
     return 0;
 }
