@@ -98,29 +98,42 @@ public:
         return input;
     }
 
-    static int rowNumber(const string &input) {
+    static int rowNumber(const string &input, const char &ticketType) {
         int userInput;
 
         while (true) {
-            try {
-                cout << input << endl;
-                cin >> userInput;
+            cout << input << endl;
+            cin >> userInput;
 
-                // Checkin for numerical values
-                if (cin.fail()) {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw runtime_error("Please only enter numerical values");
-                }
+            // Checkin for numerical values
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw runtime_error("Please only enter numerical values");
+            }
 
-                // Checkin only for values within the row
-                if (userInput >= 1 and userInput <= 13) {
-                    // we subtract (userInput - 1) so once we assign the value to the grid, the correct seat can be shown on the grid
+            // Checkin only for values within the row
+            if (ticketType == 'f') {
+                // we subtract (userInput - 1) so once we assign the value to the grid, the correct seat can be shown on the grid
+                if (userInput >= 1 && userInput <= 2) {
                     return userInput - 1;
+                } else {
+                    cout << "Please make sure that the rows are either 1 or 2 for the First Class" << endl;
                 }
-                throw runtime_error("Please only enter a number between 1 and 13");
-            } catch (const exception &e) {
-                cout << e.what() << endl;
+            } else if (ticketType == 'b') {
+                if (userInput >= 3 && userInput <= 7) {
+                    return userInput - 1;
+                } else {
+                    cout << "Please make sure that the rows are either 3 or 7 for the Business Class" << endl;
+                }
+            } else if (ticketType == 'e') {
+                if (userInput >= 8 && userInput <= 13) {
+                    return userInput - 1;
+                } else {
+                    cout << "Please make sure that the rows are either 8 or 13 for the Economy Class" << endl;
+                }
+            } else {
+                cout << "Please make sure that the letters are either f, b, or e" << endl;
             }
         }
     }
@@ -149,10 +162,10 @@ public:
 
         cout << endl;
         cout << setw(22) << " A  B  C  D  E  F" << endl;
+        arr[rowNumber][colNumber] = "X";
         for (int i = 0; i < 13; i++) {
             // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
-            arr[rowNumber][colNumber] = "X";
             for (int j = 0; j < 6; j++) {
                 // This line adjusts the positions of the stars on the grid
                 if (arr[i][j] == false) {
@@ -180,7 +193,7 @@ int main() {
         char userSeatChoice = FirstQuestion::ticketType(
             "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
         string userInputClass = FirstQuestion::ticketRowNumberInfo(userSeatChoice);
-        int userNum = FirstQuestion::rowNumber(userInputClass);
+        int userNum = FirstQuestion::rowNumber(userInputClass, userSeatChoice);
         const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
         cout << seatNumber;
         question.GameManager(userNum, seatNumber);
