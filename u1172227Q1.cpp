@@ -82,6 +82,22 @@ public:
         }
     }
 
+    static string ticketRowNumberInfo(const char &rowNum) {
+        string input;
+        switch (rowNum) {
+            case 'f':
+                input = "Enter Row number 1 - 2: ";
+                break;
+            case 'b':
+                input = "Enter Row number 3 - 7: ";
+                break;
+            case 'e':
+                input = "Enter Row number 8 - 13: ";
+                break;
+        }
+        return input;
+    }
+
     static int rowNumber(const string &input) {
         int userInput;
 
@@ -134,7 +150,7 @@ public:
         cout << endl;
         cout << setw(22) << " A  B  C  D  E  F" << endl;
         for (int i = 0; i < 13; i++) {
-            // Using setw function to correctly align the stars in the grid
+            // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
             arr[rowNumber][colNumber] = "X";
             for (int j = 0; j < 6; j++) {
@@ -163,7 +179,8 @@ int main() {
     while (userChoice) {
         char userSeatChoice = FirstQuestion::ticketType(
             "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
-        int userNum = FirstQuestion::rowNumber("Enter Row number 3 - 7: ");
+        string userInputClass = FirstQuestion::ticketRowNumberInfo(userSeatChoice);
+        int userNum = FirstQuestion::rowNumber(userInputClass);
         const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
         cout << seatNumber;
         question.GameManager(userNum, seatNumber);
