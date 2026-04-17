@@ -104,6 +104,7 @@ public:
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Please only enter numerical values" << endl;
+                continue;
             }
 
             // Checkin only for values within the row
@@ -112,19 +113,19 @@ public:
                 if (userInput >= 1 && userInput <= 2) {
                     return userInput - 1;
                 } else {
-                    cout << "Please make sure that the rows are either 1 or 2 for the First Class" << endl;
+                    cout << "Please make sure that the rows are 1 through 2 for the First Class" << endl;
                 }
             } else if (ticketType == 'b') {
                 if (userInput >= 3 && userInput <= 7) {
                     return userInput - 1;
                 } else {
-                    cout << "Please make sure that the rows are either 3 or 7 for the Business Class" << endl;
+                    cout << "Please make sure that the rows are 3 through 7 for the Business Class" << endl;
                 }
             } else if (ticketType == 'e') {
                 if (userInput >= 8 && userInput <= 13) {
                     return userInput - 1;
                 } else {
-                    cout << "Please make sure that the rows are either 8 or 13 for the Economy Class" << endl;
+                    cout << "Please make sure that the rows are 8 through 13 for the Economy Class" << endl;
                 }
             } else {
                 cout << "Please make sure that the letters are either f, b, or e" << endl;
