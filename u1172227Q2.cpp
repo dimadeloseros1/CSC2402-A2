@@ -1,21 +1,32 @@
 #include <iostream>
 using namespace std;
 
-int inputArray(const string &prompt, const int alpha[20]) {
-    int num;
+const int SIZE = 20;
+const int ROWS = 10;
+const int COLS = 4;
 
-    while (true) {
-        cout << prompt << endl;
-        cin >> num;
-
-    }
-}
-
+int inputArray(int alpha[], int size);
 
 int main() {
-    int alpha[20];
-    int beta[20];
-    int matrix[10][4];
+    int alpha[SIZE];
+    int beta[ROWS];
+    int matrix[ROWS][COLS];
+
+    inputArray(alpha, SIZE);
 
     return 0;
 }
+
+class SecondQuestion {
+
+    void inputArray(int alpha[], int size) {
+
+        cout << "Enter " << size << " integers" << endl;
+        for (int i = 0; i < size; i++) {
+            cout << "Enter the value: ";
+            cin >> alpha[i];
+        }
+    }
+};
+
+
