@@ -157,7 +157,7 @@ public:
         cout << endl;
         if (arr[rowNumber][colNumber] == false) {
             cout << "This seat is reserved for you" << endl;
-            cout << setw(22) << " A  B  C  D  E  F" << endl;
+            cout << "       A  B  C   D  E  F" << endl;
             arr[rowNumber][colNumber] = true;
         } else {
             return false;
@@ -167,6 +167,11 @@ public:
             // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
             for (int j = 0; j < 6; j++) {
+
+                // This line is crucial to set apart 3 stars from the following 3 stars as per the exercise example
+                if (j == 3) {
+                    cout << setw(4);
+                }
                 // This line adjusts the positions of the stars on the grid
                 if (arr[i][j] == false) {
                     cout << " * ";
@@ -181,30 +186,41 @@ public:
         cout << "X -- occupied seat" << endl;
         return true;
     }
+
+    // This function is the one that orchestrates the functionality of the whole application.
+    static void app() {
+        FirstQuestion question;
+        bool userChoice;
+
+        // First we invoke 3 functions to display the information to the user of the program
+        generalInfo();
+        generalGidInfo();
+        passengerClassInfo();
+
+        // The first do-while loop is in charge of reserving a seat, the program will run until the user types "no" to reserve a seat
+        do {
+            userChoice = userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
+            if (!userChoice) break;
+            char userSeatChoice = ticketType(
+                "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
+            string userInputClass = ticketRowNumberInfo(userSeatChoice);
+            bool seatAvailability;
+
+            // The inner do-while loop is in charge of checking whether the user did not pick an already taken seat
+            do {
+                int userNum = rowNumber(userInputClass, userSeatChoice);
+                const auto seatNumber = seatLetter("Enter seat number (A - F): ");
+                seatAvailability = question.GameManager(userNum, seatNumber);
+                if (!seatAvailability) {
+                    cout << "*#*#*#*# This seat is occupied *#*#*#*#" << endl;
+                }
+            } while (!seatAvailability);
+        } while (userChoice);
+    }
 };
 
 
 int main() {
-    FirstQuestion question;
-    FirstQuestion::generalInfo();
-    FirstQuestion::generalGidInfo();
-    FirstQuestion::passengerClassInfo();
-    bool userChoice;
-    do {
-        userChoice = FirstQuestion::userReserveSeat("To reserve a seat enter Y/y(Yes), N/n(No): ");
-        if (!userChoice) break;
-        char userSeatChoice = FirstQuestion::ticketType(
-            "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
-        string userInputClass = FirstQuestion::ticketRowNumberInfo(userSeatChoice);
-        bool seatAvailability;
-        do {
-            int userNum = FirstQuestion::rowNumber(userInputClass, userSeatChoice);
-            const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
-            seatAvailability = question.GameManager(userNum, seatNumber);
-            if (!seatAvailability) {
-                cout << "*#*#*#*# This seat is occupied *#*#*#*#" << endl;
-            }
-        } while (!seatAvailability);
-    } while (userChoice);
+    FirstQuestion::app();
     return 0;
 }
