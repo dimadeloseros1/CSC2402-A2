@@ -37,8 +37,8 @@ public:
         cout << "X -- occupied seat" << endl << endl;
 
         cout << "Row 1 and 2 are for first class passengers." << endl;
-        cout << "Row 3 and 7 are for business class passengers." << endl;
-        cout << "Row 8 and 13 are for economy class passengers." << endl;
+        cout << "Row 3 through 7 are for business class passengers." << endl;
+        cout << "Row 8 through 13 are for economy class passengers." << endl;
     }
 
     static bool userReserveSeat(const string &input) {
@@ -62,22 +62,20 @@ public:
         char userInput;
 
         while (true) {
-            try {
-                cout << input << endl;
-                cin >> userInput;
-                userInput = tolower(userInput);
+            cout << input << endl;
+            cin >> userInput;
+            userInput = tolower(userInput);
 
-                // This line checks if the user only inputs letters 'f', 'b', or 'e'
-                if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
-                    return userInput;
-                }
-                throw runtime_error("Please input either f, b, or e");
-            } catch (const exception &e) {
-                cout << e.what() << endl;
+            // This line checks if the user only inputs letters 'f', 'b', or 'e'
+            if (userInput == 'f' || userInput == 'b' || userInput == 'e') {
+                return userInput;
+            } else {
+                cout << "Please input either f, b, or e" << endl;
             }
         }
     }
 
+    // This function is in charge of displaying the correct rows when the user chooses either "f", "b" or "e"
     static string ticketRowNumberInfo(const char &rowNum) {
         string input;
         switch (rowNum) {
@@ -105,7 +103,7 @@ public:
             if (cin.fail()) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw runtime_error("Please only enter numerical values");
+                cout << "Please only enter numerical values" << endl;
             }
 
             // Checkin only for values within the row
@@ -155,19 +153,20 @@ public:
     bool GameManager(int rowNumber, int colNumber) {
         // Assigning false to the boolean array to avoid mismatched data in the grid
         cout << endl;
+        bool isAvailable;
         if (arr[rowNumber][colNumber] == false) {
             cout << "This seat is reserved for you" << endl;
-            cout << "       A  B  C   D  E  F" << endl;
             arr[rowNumber][colNumber] = true;
+            isAvailable = true;
         } else {
-            return false;
+            isAvailable = false;
         }
 
+        cout << "       A  B  C   D  E  F" << endl;
         for (int i = 0; i < 13; i++) {
             // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
             for (int j = 0; j < 6; j++) {
-
                 // This line is crucial to set apart 3 stars from the following 3 stars as per the exercise example
                 if (j == 3) {
                     cout << setw(4);
@@ -184,7 +183,7 @@ public:
 
         cout << "* -- available seat" << endl;
         cout << "X -- occupied seat" << endl;
-        return true;
+        return isAvailable;
     }
 
     // This function is the one that orchestrates the functionality of the whole application.
@@ -213,6 +212,7 @@ public:
                 seatAvailability = question.GameManager(userNum, seatNumber);
                 if (!seatAvailability) {
                     cout << "*#*#*#*# This seat is occupied *#*#*#*#" << endl;
+                    cout << "Make another selection" << endl;
                 }
             } while (!seatAvailability);
         } while (userChoice);
