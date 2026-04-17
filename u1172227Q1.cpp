@@ -34,7 +34,7 @@ public:
 
     static void passengerClassInfo() {
         cout << "* -- available seat" << endl;
-        cout << "X -- available seat" << endl << endl;
+        cout << "X -- occupied seat" << endl << endl;
 
         cout << "Row 1 and 2 are for first class passengers." << endl;
         cout << "Row 3 and 7 are for business class passengers." << endl;
@@ -152,13 +152,17 @@ public:
         }
     }
 
-    void GameManager(int rowNumber, int colNumber) {
-        // Assigning false to the boolean array to avoid missmatched data in the grid
-
-
+    bool GameManager(int rowNumber, int colNumber) {
+        // Assigning false to the boolean array to avoid mismatched data in the grid
         cout << endl;
-        cout << setw(22) << " A  B  C  D  E  F" << endl;
-        arr[rowNumber][colNumber] = true;
+        if (arr[rowNumber][colNumber] == false) {
+            cout << "This seat is reserved for you" << endl;
+            cout << setw(22) << " A  B  C  D  E  F" << endl;
+            arr[rowNumber][colNumber] = true;
+        } else {
+            return false;
+        }
+
         for (int i = 0; i < 13; i++) {
             // Using "setw" function to correctly align the stars in the grid
             cout << "Row " << setw(2) << i + 1;
@@ -175,6 +179,7 @@ public:
 
         cout << "* -- available seat" << endl;
         cout << "X -- occupied seat" << endl;
+        return true;
     }
 };
 
@@ -191,10 +196,15 @@ int main() {
         char userSeatChoice = FirstQuestion::ticketType(
             "Enter ticket type: F/f (first class); (B/b) (business class); E/e (economy class): ");
         string userInputClass = FirstQuestion::ticketRowNumberInfo(userSeatChoice);
-        int userNum = FirstQuestion::rowNumber(userInputClass, userSeatChoice);
-        const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
-        cout << seatNumber;
-        question.GameManager(userNum, seatNumber);
+        bool seatAvailability;
+        do {
+            int userNum = FirstQuestion::rowNumber(userInputClass, userSeatChoice);
+            const auto seatNumber = FirstQuestion::seatLetter("Enter seat number (A - F): ");
+            seatAvailability = question.GameManager(userNum, seatNumber);
+            if (!seatAvailability) {
+                cout << "*#*#*#*# This seat is occupied *#*#*#*#" << endl;
+            }
+        } while (!seatAvailability);
     } while (userChoice);
     return 0;
 }
