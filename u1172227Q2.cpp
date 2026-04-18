@@ -30,10 +30,30 @@ void inputArray(int alpha[], int size) {
 
 // Exercise "b"
 void doubleArray(int beta[], const int alpha[], int size) {
-    // int alphaCopy[] = ALP
-
     for (int i = 0; i < size; i++) {
         beta[i] = alpha[i] * 2;
         cout << beta[i];
+    }
+}
+
+// Exercise "c"
+void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][COLS], int cols, int rows) {
+
+    // First 5 elements of the row of matrix
+    int index = 0;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] =  alpha[index];
+            index++;
+        }
+    }
+
+    // Last 5 elements of the row of matrix
+    index = 0;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = beta[index];
+            index++;
+        }
     }
 }
