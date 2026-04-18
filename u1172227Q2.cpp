@@ -1,20 +1,24 @@
 #include <iostream>
 using namespace std;
 
-const int SIZE = 20;
-const int ROWS = 10;
-const int COLS = 4;
+const int _size = 20;
+const int _rows = 10;
+const int _cols = 4;
 
 void inputArray(int alpha[], int size);
-void doubleArray(int beta[], int alpha[], int size);
+void doubleArray(int beta[], const int alpha[], int size);
+void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][_cols], int cols, int rows);
+void printArray(int arr[], int size);
 
 int main() {
-    int alpha[SIZE];
-    int beta[ROWS];
-    int matrix[ROWS][COLS];
+    int alpha[_size];
+    int beta[_rows];
+    int matrix[_rows][_cols];
 
-    inputArray(alpha, SIZE);
-    doubleArray(beta, alpha, SIZE);
+    inputArray(alpha, _size);
+    doubleArray(beta, alpha, _size);
+    copyAlphaBeta(alpha, beta, matrix, _cols, _rows);
+    printArray(beta, _size);
 
     return 0;
 }
@@ -32,12 +36,11 @@ void inputArray(int alpha[], int size) {
 void doubleArray(int beta[], const int alpha[], int size) {
     for (int i = 0; i < size; i++) {
         beta[i] = alpha[i] * 2;
-        cout << beta[i];
     }
 }
 
 // Exercise "c"
-void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][COLS], int cols, int rows) {
+void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][_cols], int cols, int rows) {
 
     // First 5 elements of the row of matrix
     int index = 0;
@@ -57,3 +60,17 @@ void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][COLS], int 
         }
     }
 }
+
+// Exercise "d"
+void printArray(int arr[], int vol) {
+    for (int i = 0; i < vol; i++) {
+        cout << arr[i];
+
+        // This line prints X amount of values per each line until reaching 15 lines
+        if ((i + 1) % 15 == 0) {
+            cout << endl;
+        }
+    }
+}
+
+
