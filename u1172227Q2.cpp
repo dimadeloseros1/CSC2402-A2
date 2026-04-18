@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <iostream>
 using namespace std;
 
@@ -8,17 +9,26 @@ const int _cols = 4;
 void inputArray(int alpha[], int size);
 void doubleArray(int beta[], const int alpha[], int size);
 void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][_cols], int cols, int rows);
-void printArray(int arr[], int size);
+void printArray(int arr[], int vol);
+void multiDArray(const int matrix[][_cols], int rows, int cols);
 
 int main() {
     int alpha[_size];
-    int beta[_rows];
+    int beta[_size];
     int matrix[_rows][_cols];
 
     inputArray(alpha, _size);
     doubleArray(beta, alpha, _size);
     copyAlphaBeta(alpha, beta, matrix, _cols, _rows);
+
+    cout << "Alpha array:" << endl;
+    printArray(alpha, _size);
+
+    cout << "Beta array:" << endl;
     printArray(beta, _size);
+
+    cout << "Matrix:" << endl;
+    multiDArray(matrix, _rows, _cols);
 
     return 0;
 }
@@ -53,7 +63,7 @@ void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][_cols], int
 
     // Last 5 elements of the row of matrix
     index = 0;
-    for (int i = 0; i < rows; i++) {
+    for (int i = rows / 2; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = beta[index];
             index++;
@@ -64,12 +74,23 @@ void copyAlphaBeta(const int alpha[], const int beta[], int matrix[][_cols], int
 // Exercise "d"
 void printArray(int arr[], int vol) {
     for (int i = 0; i < vol; i++) {
-        cout << arr[i];
+        cout << setw(5) << arr[i];
 
         // This line prints X amount of values per each line until reaching 15 lines
-        if ((i + 1) % 15 == 0) {
+        if ((i + 1) % 15 == 0 || i == vol - 1) {
             cout << endl;
         }
+    }
+    cout << endl;
+}
+
+// Exercise "e"
+void multiDArray(const int matrix[][_cols], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << setw(4) << matrix[i][j];
+        }
+        cout << endl;
     }
 }
 
