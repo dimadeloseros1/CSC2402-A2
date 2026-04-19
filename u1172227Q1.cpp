@@ -9,8 +9,7 @@ class FirstQuestion {
 public:
     bool arr[13][6] = {false};
 
-    FirstQuestion() {
-    }
+    FirstQuestion() = default;
 
     static void generalInfo() {
         cout << "This program assigns seats for a commercial airplane." << endl;
