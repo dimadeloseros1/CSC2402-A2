@@ -7,3 +7,6 @@
  
 using namespace std;
 
+romanType::romanType() {
+    romanNum = "I";
+}
