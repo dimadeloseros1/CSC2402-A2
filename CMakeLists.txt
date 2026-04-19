@@ -3,6 +3,8 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(untitled main.cpp
+add_executable(untitled
         u1172227Q1.cpp
-        u1172227Q2.cpp)
+        u1172227Q2.cpp
+        romanimp.cpp
+        main.cpp)
