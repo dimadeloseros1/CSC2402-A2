@@ -122,3 +122,19 @@ int romanType::getValue() {
     return num;
 }
 
+// The following function is in charge or incrementing
+
+void romanType::inc() {
+    num++;
+    romanNum = intToRoman(num);
+}
+
+// The following function is in charge of decrementing
+
+void romanType::dec() {
+    // The following constraint is in charge of preventing the negative roman numbers
+    if (num > 1) {
+        num--;
+        romanNum = intToRoman(num);
+    }
+}
