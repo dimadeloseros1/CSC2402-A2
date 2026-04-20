@@ -84,4 +84,22 @@ void romanType::romanToPositiveInteger() {
     }
 }
 
+// The following function converts integer k to the Roman numerical string
+string romanType::intToRoman(int number) {
+    const int vals[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+    const string symbols[] = {"M", "CM", "D", "CD", "C", "XC","L", "XL", "X", "IX", "V", "IV", "I"};
+
+    const int size = 13;
+    string result;
+
+    // This loop, loops through the vals int array
+    for (int i = 0; i < size; i++) {
+        do {
+            result += symbols[i];
+            number -= vals[i];
+        } while (number >= vals[i]);
+    }
+    return result;
+}
+
 
