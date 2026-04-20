@@ -102,4 +102,23 @@ string romanType::intToRoman(int number) {
     return result;
 }
 
+// Method to print positive integers
+void romanType::printPositiveInteger() const {
+    cout << num << endl;
+}
+
+// Method that prints roman nums
+void romanType::printRoman() const {
+    cout << romanNum << endl;
+}
+
+// Both of the getters
+
+string romanType::getRoman() {
+    return romanNum;
+}
+
+int romanType::getValue() {
+    return num;
+}
 
